@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require('express');
 var cors = require('cors');
 require('express-async-errors');
@@ -35,7 +37,7 @@ app.use('/api/markets', marketController);
 app.use('/api/halls', hallController);
 
 
-const port = 9050;
+const port = process.env.PORT || 9050;
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
