@@ -4,10 +4,10 @@ const mysql = require('mysql2/promise');
 
 
 const connections = mysql.createPool({
-    host: PROCESS.env.HOST_NAME,
-    user: PROCESS.env.USER_NAME,
-    database: PROCESS.env.DB_NAME,
-    password: PROCESS.env.PASSWORD,
+    host: process.env.HOST_NAME,
+    user: process.env.USER_NAME,
+    database: process.env.DB_NAME,
+    password: process.env.PASSWORD,
     dateStrings: true
 });
 
