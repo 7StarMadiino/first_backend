@@ -44,9 +44,9 @@ module.exports.create = async(obj) => {
     //     obj.is_deleted = false
     // }
 
-    (obj.is_deleted) ? obj.is_deleted = obj.is_deleted : false
+    obj.is_deleted = (obj.is_deleted) ? obj.is_deleted : false
 
-    (obj.status) ? obj.status = obj.status : false
+    obj.status = (obj.status) ? obj.status : false
 
 
     // if( obj.status ){
