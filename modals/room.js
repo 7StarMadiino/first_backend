@@ -1,7 +1,7 @@
 const db = require('../config/dbConn');
 
 module.exports.findAll = async() => {
-    const sql = "SELECT * FROM rooms;";
+    const sql = "SELECT * FROM rooms WHERE is_deleted <> 1;";
     const [rows] = await db.query(sql)
 
     return rows.map(row => {
