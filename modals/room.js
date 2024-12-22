@@ -44,9 +44,9 @@ module.exports.create = async(obj) => {
     //     obj.is_deleted = false
     // }
 
-    obj.is_deleted ? obj.is_deleted : false
+    (obj.is_deleted) ? obj.is_deleted : false
 
-    obj.status ? obj.status : false
+    (obj.status) ? obj.status : false
 
 
     // if( obj.status ){
@@ -54,7 +54,7 @@ module.exports.create = async(obj) => {
     // }else{
     //     obj.status = false
     // }
-    
+
     const sql = "INSERT INTO rooms(id, room_name,room_status, is_deleted) VALUES(NULL, ?,?,?);";
     const [row] = await db.query(sql, [obj.name, obj.status, obj.is_deleted]);
     return row
