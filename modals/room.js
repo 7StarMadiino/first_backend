@@ -38,17 +38,23 @@ module.exports.deleteById = async(id) => {
 
 module.exports.create = async(obj) => {
 
-    if( obj.is_deleted ){
-        obj.is_deleted = obj.is_deleted
-    }else{
-        obj.is_deleted = false
-    }
+    // if( obj.is_deleted ){
+    //     obj.is_deleted = obj.is_deleted
+    // }else{
+    //     obj.is_deleted = false
+    // }
 
-    if( obj.status ){
-        obj.status = obj.status
-    }else{
-        obj.status = false
-    }
+    obj.is_deleted ? obj.is_deleted : false
+
+    obj.status ? obj.status : false
+
+
+    // if( obj.status ){
+    //     obj.status = obj.status
+    // }else{
+    //     obj.status = false
+    // }
+    
     const sql = "INSERT INTO rooms(id, room_name,room_status, is_deleted) VALUES(NULL, ?,?,?);";
     const [row] = await db.query(sql, [obj.name, obj.status, obj.is_deleted]);
     return row
