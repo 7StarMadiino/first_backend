@@ -1,6 +1,25 @@
 const Joi = require('joi');
 const express = require('express');
+const multer = require('multer')
+const path = require('path');
+
+
 const router = express.Router();
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/')
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '_' + Math.round(Math.random() * 1E9);
+        
+        const newFileName = file.fieldname + "_" + uniqueSuffix + path.extname(file.originalname); 
+        cb(null, newFileName); 
+        // cb(null, `${Date.now()}-${file.originalname}`)
+    }
+});
+
+const upload = multer({ storage: storage });
 
 const customerModal = require('../modals/customer');
 
@@ -16,7 +35,7 @@ router.get('/:id', async(req, res) => {
 });
 
 
-router.post('/', async(req, res) => {
+router.post('/', upload.single('image'), async(req, res) => {
 
     const {error} = validateCustomer(req.body);
     if( error ){ return res.status(400).send(`${error.message}`) }
@@ -26,6 +45,14 @@ router.post('/', async(req, res) => {
     .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize each word
     .join(' '); // Join the words back into a string
     
+    if (!req.file) {
+        return res.status(400).json({ message: 'No file uploaded.' });
+    }
+
+    // res.json({ message: 'Image uploaded successfully!', filename: req.file.filename });
+
+    req.body.image = req.file.filename;
+
     await customerModal.create(req.body);
     res.status(201).send("Operation Done");
 });
