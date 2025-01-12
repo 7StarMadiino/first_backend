@@ -59,6 +59,9 @@ module.exports.deleteById = async(id) => {
 
 module.exports.create = async(obj) => {
     const sql = "INSERT INTO customers(id, customer_name, customer_phone, customer_email, image, is_deleted) VALUES(NULL, ?,?,?,?,?);";
+
+    obj.is_deleted = (obj.is_deleted) ? obj.is_deleted : false
+
     const [row] = await db.query(sql, [obj.name, obj.phone, obj.email, obj.image, obj.is_deleted]);
     return row;
 };
